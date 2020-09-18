@@ -4,13 +4,11 @@
  * ***********************************
  */
 
-export class ResponseError extends Error {
-  private readonly statusCode: number
+export class ErrorResponse extends Error {
+  public statusCode: number
 
   constructor(status: number, message: string) {
-    super()
+    super(message)
     this.statusCode = status
-    this.message = message
   }
-
 }

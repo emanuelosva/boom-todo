@@ -11,7 +11,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import helmet from 'helmet'
 
-import { notFoundHandler } from './middleware'
+import { notFoundHandler, errorHandler } from './middleware'
 
 /**
  * Express app instance
@@ -40,6 +40,7 @@ app.use(express.urlencoded({ extended: true }))
  * Error Handler
  */
 app.use(notFoundHandler)
+app.use(errorHandler)
 
 /**
  * Export app instance to separte from launch server file
