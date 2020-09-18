@@ -1,4 +1,4 @@
-// Prisma Models
+// Prisma settings
 
 datasource db {
   provider = "sqlite"
@@ -7,4 +7,32 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+}
+
+// Models
+
+model User {
+  id         Int      @default(autoincrement()) @id
+  email      String   @unique
+  name       String
+  password   String
+  created_at DateTime
+  updated_at DateTime
+  todos      Todo[]
+}
+
+model Todo {
+  id         Int      @default(autoincrement()) @id
+  title      String
+  content    String
+  completed  Boolean
+  isUrgent   Boolean
+  dateTodo   DateTime
+  tag        String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  postedById Int
+  postedBy   User     @relation(fields: [postedById], references: [id])
+
+  @@index([postedById], name: "postedById")
 }
