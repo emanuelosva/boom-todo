@@ -11,6 +11,12 @@
   ],
   "rules": {
     "no-console": 1,
-    "semi": "warn"
-  }
+    "semi": 0
+  },
+  "ignorePatterns": [
+    "dist",
+    "db-auth-service",
+    "node_modules",
+    "src/bin"
+  ]
 }
