@@ -10,11 +10,16 @@ class User(models.Model):
     """
     Custom user model.
     """
+
+    class Meta:
+        """Table name"""
+        db_table = 'User'
+
     email = models.EmailField(_('Email adress'), unique=True)
     name = models.TextField()
     password = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    createdAt = models.DateTimeField()
+    updatedAt = models.DateTimeField()
 
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'email'
