@@ -11,11 +11,17 @@ import morgan from 'morgan'
 import cors from 'cors'
 import helmet from 'helmet'
 
+import { User } from './components/users/controller'
 import { notFoundHandler, errorHandler } from './middleware'
 
 /**
  * Express app instance
  */
+declare module 'express' {
+  interface Request {
+    user?: User
+  }
+}
 const app: express.Application = express()
 
 /**
