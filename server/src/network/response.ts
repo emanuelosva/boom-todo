@@ -28,7 +28,7 @@ const STATUS_DETAILS: Record<string, string> = {
  */
 export const responseSuccess = (
   res: express.Response,
-  data: Record<string, unknown>,
+  data: unknown,
   status: number,
   detail: string,
 ): void => {
@@ -40,7 +40,7 @@ export const responseSuccess = (
     .json({
       error: false,
       detail: statusDetail,
-      data: { ...data },
+      data,
     })
 }
 
