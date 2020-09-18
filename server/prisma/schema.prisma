@@ -18,15 +18,15 @@ model User {
 }
 
 model Todo {
-  id         Int      @default(autoincrement()) @id
-  title      String
-  content    String
-  completed  Boolean  @default(false)
-  isUrgent   Boolean  @default(false)
-  tag        String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  dateTodo   DateTime
-  postedById Int
-  user       User     @relation(fields: [postedById], references: [id])
+  id          Int      @default(autoincrement()) @id
+  title       String
+  content     String
+  completed   Boolean  @default(false)
+  isUrgent    Boolean  @default(false)
+  tag         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  dateTodo    DateTime
+  postedBy_id Int
+  user        User     @relation(fields: [postedBy_id], references: [id])
 }
