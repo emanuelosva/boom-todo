@@ -15,5 +15,6 @@ export const config = {
   },
   auth: {
     secret: process.env.JWT_SECRET,
-  }
+    apiRoute: process.env.AUTH_API_ROUTE
+  },
 }
