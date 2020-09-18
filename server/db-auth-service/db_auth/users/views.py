@@ -5,13 +5,19 @@ User views
 import json
 from datetime import timedelta, datetime
 
-import bcrypt
 from django.http import JsonResponse
+from django.conf import settings
+
 from jose import jwt
+from passlib.context import CryptContext
 from .models import User
 
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 1440
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
+ALGORITHM = settings.ALGORITHM
+JWT_SECRET = settings.JWT_SECRET
+
+pwd_context = CryptContext(schemes=["bcrypt"])
 
 
 def login_view(request):
@@ -42,7 +48,7 @@ def login_view(request):
         if not user:
             return JsonResponse(response, status=401)
 
-        if not bcrypt.checkpw(body['password'], user.password):
+        if not pwd_context.verify(body['password'], user.password):
             return JsonResponse(response, status=401)
 
         # Set the expiration time for token
@@ -52,11 +58,11 @@ def login_view(request):
         # Encod the JWT
         to_encode = {'userId': user.id}
         to_encode.update({'exp': expire})
-        token = jwt.encode(to_encode, 'secret', algorithm='HS256')
+        token = jwt.encode(to_encode, 'secret', algorithm=ALGORITHM)
 
-        response.update({detail: 'TokenType: Bearer'})
+        response.update({'detail': 'TokenType: Bearer'})
         response.update({'token': token})
-        response.update({'error': ''})
+        response.update({'error': False})
 
         return JsonResponse(response)
 
