@@ -10,15 +10,15 @@ import {
   PrismaClient,
   User,
   UserCreateInput,
-  // UserWhereUniqueInput,
-  // UserUpdateInput
+  UserUpdateInput,
+  UserWhereUniqueInput,
 } from '@prisma/client'
 import { PrismaDb } from '../../db'
 import { ErrorResponse } from '../../lib/errorClass'
 import { config } from '../../config'
 
 export interface AuthResponse {
-  user: User,
+  user: User | null,
   token: string
 }
 
@@ -60,12 +60,46 @@ export class UserController {
     return { user, token }
   }
 
-  // async update({ id, name, email, password }: Record<string, string>): Promise<User> {
+  async login(credentials: {
+    email: string,
+    password: string
+  }): Promise<AuthResponse> {
+    const { email, password } = credentials
+    let token: string
+    try {
+      const { data } = await axios({
+        url: config.auth.apiRoute,
+        method: 'POST',
+        data: { email, password }
+      })
+      token = data.token
+    } catch (error) {
+      return Promise.reject(new ErrorResponse(error.response.status, ''))
+    }
+    const user = await this.prisma.user.findOne({ where: { email } })
+    return { user, token }
+  }
+
+  async get(userQuery: UserWhereUniqueInput): Promise<User | null> {
+    const user = await this.prisma.user.findOne({ where: userQuery })
+    if (!user) {
+      return Promise.reject(new ErrorResponse(404, 'User notFound'))
+    }
+    return user
+  }
+
+  // async update(
+  //   where: UserWhereUniqueInput,
+  //   userData: UserUpdateInput,
+  // ): Promise<User> {
+  //   const { name, email, password } = userData
   //   const hashedPassword = await bcrypt.hash(password, 10)
+
   //   const user = await this.prisma.user.update({
-  //     where: { id: Number(id) },
+  //     where,
   //     data: { name, email, password: hashedPassword }
   //   })
+
   //   if (!user) return Promise.reject(new ErrorResponse(400, 'Invalid ID'))
   //   return user
   // }
@@ -76,21 +110,5 @@ export class UserController {
   //   })
   //   if (!user) return Promise.reject(new ErrorResponse(400, 'Invalid ID'))
   //   return user
-  // }
-
-  // async login({ email, password }: Record<string, string>): Promise<AuthResponse> {
-  //   let token: string
-  //   try {
-  //     const { data } = await axios({
-  //       url: config.auth.apiRoute,
-  //       method: 'POST',
-  //       data: { email, password }
-  //     })
-  //     token = data.token
-  //   } catch (error) {
-  //     return Promise.reject(new ErrorResponse(error.response.status, ''))
-  //   }
-  //   const user: User | null = await this.prisma.user.findOne({ where: { email } })
-  //   return { user, token }
   // }
 }

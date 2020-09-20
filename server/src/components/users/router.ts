@@ -28,22 +28,18 @@ router.post(
   }
 )
 
-// router.post(
-//   '/login',
-//   async (
-//     req: express.Request,
-//     res: express.Response,
-//     next: express.NextFunction
-//   ) => {
-//     try {
-//       const { email, password } = req.body
-//       const { user, token } = await userController.login({ email, password })
-//       responseSuccess(res, { user, token }, 200, 'Login success')
-//     } catch (error) {
-//       next(error)
-//     }
-//   }
-// )
+router.post(
+  '/login',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, password } = req.body
+      const { user, token } = await userController.login({ email, password })
+      responseSuccess(res, { user, token }, 200, 'Login success')
+    } catch (error) {
+      next(error)
+    }
+  }
+)
 
 // router.get(
 //   '/',
