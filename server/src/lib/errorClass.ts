@@ -6,9 +6,11 @@
 
 export class ErrorResponse extends Error {
   public statusCode: number
+  public message: string
 
   constructor(status: number, message: string) {
-    super(message)
+    super()
     this.statusCode = status
+    this.message = message
   }
 }
