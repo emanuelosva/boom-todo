@@ -14,6 +14,7 @@ describe('Users Endpoints', () => {
   const newUser = { name: 'Stan', email: 'stanT@marvel.com', password: 'user123' }
 
   describe('POST /users/signup', () => {
+
     test.skip('Should return the user and token with status 201', async (done) => {
       const response = await request
         .post('/v1/users/signup')
@@ -29,6 +30,20 @@ describe('Users Endpoints', () => {
       expect(typeof body.data.user.id).toBe('number')
 
       userId = body.data.user.id
+      done()
+    })
+
+    test('Should return a status 409 if email already exists', async (done) => {
+      const response = await request
+        .post('/v1/users/signup')
+        .set('Accept', 'application/json')
+        .send({ ...newUser })
+
+      const { body, status } = response
+
+      expect(status).toEqual(409)
+      expect(body.error).toBeTruthy()
+      expect(body.detail).toEqual('Email already exists')
       done()
     })
   })
