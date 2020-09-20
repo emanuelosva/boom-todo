@@ -5,21 +5,31 @@
  */
 
 import supertest from 'supertest'
-import app from '../../src/app'
+import { app } from '../../src/app'
 
 describe('Users Endpoints', () => {
   const request = supertest(app)
 
-  describe('POST /users/signup', () => {
-    test('Should return the user and token with status 201', async () => {
-      const response = await request.post('/v1/users/signup')
-      expect(response.status).toEqual(201)
+  let userId
+  const newUser = { name: 'Stan', email: 'stanT@marvel.com', password: 'user123' }
 
-      const { body } = response
+  describe('POST /users/signup', () => {
+    test.skip('Should return the user and token with status 201', async (done) => {
+      const response = await request
+        .post('/v1/users/signup')
+        .set('Accept', 'application/json')
+        .send({ ...newUser })
+
+      const { body, status } = response
+
+      expect(status).toEqual(201)
       expect(body.error).toBeFalsy()
       expect(body.detail).toEqual('User created & logged')
-      expect(body.data.token).toBe(String)
-      expect(body.data.user.id).toBe(Number)
+      expect(typeof body.data.token).toBe('string')
+      expect(typeof body.data.user.id).toBe('number')
+
+      userId = body.data.user.id
+      done()
     })
   })
 })

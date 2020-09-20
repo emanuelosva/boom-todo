@@ -23,7 +23,7 @@ declare module 'express' {
     user?: User
   }
 }
-const app: express.Application = express()
+export const app: express.Application = express()
 
 /**
  * App logger
@@ -53,8 +53,3 @@ app.use('/v1', apiRouter)
  */
 app.use(notFoundHandler)
 app.use(errorHandler)
-
-/**
- * Export app instance to separte from launch server file
- */
-export default app
