@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node dist/bin/www",
     "dev": "NODE_ENV=development DEBUG=app:* ts-node-dev --respawn src/bin/www",
-    "test": "jest tests/**.test.ts --verbose",
+    "test": "jest tests/**/**.test.ts --verbose",
     "tsc": "tsc"
   },
   "keywords": [],

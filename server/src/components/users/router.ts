@@ -4,7 +4,7 @@
  * **************************
  */
 
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import { responseSuccess } from '../../network/response'
 import { UserController } from './controller'
 
@@ -17,11 +17,11 @@ const userController = new UserController()
 
 router.post(
   '/signup',
-  async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { name, email, password } = req.body
       const { user, token } = await userController.create({ name, email, password })
-      responseSuccess(res, { user, token }, 201, 'User created/logged')
+      responseSuccess(res, { user, token }, 201, 'User created & logged')
     } catch (error) {
       next(error)
     }

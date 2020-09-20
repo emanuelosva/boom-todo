@@ -6,23 +6,19 @@
 
 import bcrypt from 'bcrypt'
 import axios from 'axios'
-import { PrismaClient } from '@prisma/client'
+import {
+  PrismaClient,
+  User,
+  UserCreateInput,
+  // UserWhereUniqueInput,
+  // UserUpdateInput
+} from '@prisma/client'
 import { PrismaDb } from '../../db'
 import { ErrorResponse } from '../../lib/errorClass'
 import { config } from '../../config'
 
-export interface User {
-  id: number,
-  name: string,
-  email: string,
-  password: string,
-  createdAt: Date,
-  updatedAt: Date,
-  todos?: unknown[],
-}
-
 export interface AuthResponse {
-  user: User | null,
+  user: User,
   token: string
 }
 
@@ -30,18 +26,16 @@ export interface AuthResponse {
  * Bussiness logic for user operations
  */
 export class UserController {
-  private prisma: PrismaClient
 
-  constructor() {
-    this.prisma = PrismaDb.getPrismaClient()
-  }
+  constructor(
+    private readonly prisma: PrismaClient = PrismaDb.getPrismaClient()
+  ) { }
 
-  async create(
-    { name, email, password }: Record<string, string>
-  ): Promise<AuthResponse> {
+  async create(userData: UserCreateInput): Promise<AuthResponse> {
+    const { name, email, password } = userData
+    const userUseTheEmail = await this.prisma.user.findOne({ where: { email } })
 
-    const userUseEmail = await this.prisma.user.findOne({ where: { email } })
-    if (userUseEmail) {
+    if (userUseTheEmail) {
       return Promise.reject(new ErrorResponse(409, 'Email already exists'))
     }
 

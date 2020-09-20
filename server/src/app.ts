@@ -11,8 +11,9 @@ import morgan from 'morgan'
 import cors from 'cors'
 import helmet from 'helmet'
 
-import { User } from './components/users/controller'
+import { apiRouter } from './network/router'
 import { notFoundHandler, errorHandler } from './middleware'
+import { User } from '@prisma/client'
 
 /**
  * Express app instance
@@ -43,6 +44,11 @@ app.use(express.urlencoded({ extended: true }))
 
 
 /**
+ * Api Routes
+ */
+app.use('/v1', apiRouter)
+
+/**
  * Error Handler
  */
 app.use(notFoundHandler)
@@ -51,4 +57,4 @@ app.use(errorHandler)
 /**
  * Export app instance to separte from launch server file
  */
-module.exports = app
+export default app
