@@ -83,32 +83,36 @@ export class UserController {
   async get(userQuery: UserWhereUniqueInput): Promise<User | null> {
     const user = await this.prisma.user.findOne({ where: userQuery })
     if (!user) {
-      return Promise.reject(new ErrorResponse(404, 'User notFound'))
+      return Promise.reject(new ErrorResponse(404, 'User not found'))
     }
     return user
   }
 
-  // async update(
-  //   where: UserWhereUniqueInput,
-  //   userData: UserUpdateInput,
-  // ): Promise<User> {
-  //   const { name, email, password } = userData
-  //   const hashedPassword = await bcrypt.hash(password, 10)
+  async update(
+    where: UserWhereUniqueInput,
+    userData: UserUpdateInput,
+  ): Promise<User> {
+    if (userData.password) {
+      const hashedPassword = await bcrypt.hash(userData.password, 10)
+      userData.password = hashedPassword
+    }
+    try {
+      const user = await this.prisma.user.update({
+        where,
+        data: userData,
+      })
+      return user
+    } catch (error) {
+      return Promise.reject(new ErrorResponse(409, 'Invalid ID'))
+    }
+  }
 
-  //   const user = await this.prisma.user.update({
-  //     where,
-  //     data: { name, email, password: hashedPassword }
-  //   })
-
-  //   if (!user) return Promise.reject(new ErrorResponse(400, 'Invalid ID'))
-  //   return user
-  // }
-
-  // async delete({ id }: Record<string, string>): Promise<User> {
-  //   const user = await this.prisma.user.delete({
-  //     where: { id: Number(id) }
-  //   })
-  //   if (!user) return Promise.reject(new ErrorResponse(400, 'Invalid ID'))
-  //   return user
-  // }
+  async delete(where: UserWhereUniqueInput): Promise<User> {
+    try {
+      const user = await this.prisma.user.delete({ where })
+      return user
+    } catch (error) {
+      return Promise.reject(new ErrorResponse(409, 'Invalid ID'))
+    }
+  }
 }
