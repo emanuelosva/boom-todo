@@ -14,6 +14,7 @@ import helmet from 'helmet'
 import { apiRouter } from './network/router'
 import { notFoundHandler, errorHandler } from './middleware'
 import { User } from '@prisma/client'
+import { swaggerServer } from './swaggerConf'
 
 /**
  * Express app instance
@@ -24,6 +25,11 @@ declare module 'express' {
   }
 }
 export const app: express.Application = express()
+
+/**
+ * Swagger Docs [route: /api-docs]
+ */
+swaggerServer(app)
 
 /**
  * App logger
