@@ -15,6 +15,7 @@ describe('Users Endpoints', () => {
   const newUser = { name: 'Stan', email: 'stanT@marvel.com', password: 'user123' }
 
   describe('POST /users/signup', () => {
+
     test.skip('Should return the user and token with status 201', async (done) => {
       const response = await request
         .post('/v1/users/signup')
@@ -46,6 +47,20 @@ describe('Users Endpoints', () => {
       expect(body.detail).toEqual('Email already exists')
       done()
     })
+
+    test('Should return a status 400 on bad request payload', async (done) => {
+      const response = await request
+        .post('/v1/users/signup')
+        .set('Accept', 'application/json')
+        .send({ name: '', email: 25, password: '' })
+
+      const { body, status } = response
+
+      expect(status).toEqual(400)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
   })
 
   describe('POST /users/login', () => {
@@ -85,5 +100,20 @@ describe('Users Endpoints', () => {
       expect(body.data.token).toBeFalsy()
       done()
     })
+
+    test('Should return a status 400 on bad request payload', async (done) => {
+      const response = await request
+        .post('/v1/users/signup')
+        .set('Accept', 'application/json')
+        .send({ name: '', email: 25, password: '' })
+
+      const { body, status } = response
+
+      expect(status).toEqual(400)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
   })
+
 })
