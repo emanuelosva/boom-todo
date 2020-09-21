@@ -7,7 +7,9 @@
     "start": "NODE_ENV=production node dist/bin/www",
     "dev": "NODE_ENV=development DEBUG=app:* ts-node-dev --respawn src/bin/www",
     "build": "NODE_ENV=production tsc",
-    "test": "jest tests/**/**.test.ts --verbose"
+    "test": "jest tests/**/**.test.ts --verbose",
+    "test:coverage": "npm run test -- --coverage",
+    "test:report": "sensible-browser coverage/index.html"
   },
   "keywords": [],
   "author": "",
