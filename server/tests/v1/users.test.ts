@@ -7,12 +7,13 @@
 import supertest from 'supertest'
 import { app } from '../../src/app'
 import { getToken } from '../../src/lib/auth/utils'
+import { userMock } from './__mocks__'
 
 describe('Users Endpoints', () => {
   const request = supertest(app)
 
   let userId: number
-  const newUser = { name: 'Stan', email: 'stan@marvel.com', password: 'user123' }
+  const newUser = { ...userMock }
 
   describe('POST /users/signup', () => {
 
