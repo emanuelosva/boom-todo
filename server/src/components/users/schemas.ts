@@ -9,8 +9,12 @@ import Joi from 'joi'
 /**
  * Single field for query/params
  */
-export const idSchema = Joi.number().min(1)
-export const emailSchema = Joi.string().email()
+export const idSchema = Joi.object({
+  id: Joi.number().min(1)
+})
+export const emailSchema = Joi.object({
+  email: Joi.string().email()
+})
 
 /**
  * Objet Schema for Body Requests
