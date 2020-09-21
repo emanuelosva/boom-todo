@@ -64,7 +64,7 @@ describe('Todo ednpoints', () => {
 
   })
 
-  describe.only('GET /todos', () => {
+  describe('GET /todos', () => {
 
     test('Should return a list with todos', async (done) => {
       const token = getToken({ userId: user.id })
@@ -83,6 +83,56 @@ describe('Todo ednpoints', () => {
     test('Should return a unauthorized error if not token', async (done) => {
       const response = await request
         .get('/v1/todos')
+
+      const { body, status } = response
+      expect(status).toEqual(401)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
+  })
+
+  describe('PUT /post/:id', () => {
+
+    test('Should return the updated Todo', async (done) => {
+      const newTitle = 'Updated title'
+      const isUrgent = true
+      const newtTotoDate = new Date('2025-12-18T10:30')
+      const token = getToken({ userId: user.id })
+
+      const response = await request
+        .put(`/v1/todos/${todoId || 1}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({ title: newTitle, isUrgent, dateTodo: newtTotoDate })
+
+      const { body, status } = response
+      expect(status).toEqual(200)
+      expect(body.error).toBeFalsy()
+      expect(body.detail).toEqual('Todo updated')
+      expect(body.data.id).toEqual(todoId || 1)
+      expect(body.data.title).toEqual(newTitle)
+      expect(body.data.isUrgent).toBeTruthy()
+      expect(new Date(body.data.dateTodo)).toEqual(newtTotoDate)
+      done()
+    })
+
+    test('Should return a bad request on invalid payload', async (done) => {
+      const token = getToken({ userId: user.id })
+
+      const response = await request
+        .put(`/v1/todos/${todoId || 1}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({ title: 25, dateTodo: 'This is Invalid' })
+
+      const { body, status } = response
+      expect(status).toEqual(400)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
+    test('Should return a unauthorized error if not token', async (done) => {
+      const response = await request
+        .put(`/v1/todos/${todoId || 1}`)
 
       const { body, status } = response
       expect(status).toEqual(401)
