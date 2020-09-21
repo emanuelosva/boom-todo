@@ -5,8 +5,10 @@
  */
 
 import express, { Request, Response, NextFunction } from 'express'
+import { validationHandler } from '../../middleware'
 import { responseSuccess } from '../../network/response'
 import { UserController } from './controller'
+import { userCreateSchema, userLoginSchema } from './schemas'
 
 /**
  * Router
@@ -17,6 +19,7 @@ const userController = new UserController()
 
 router.post(
   '/signup',
+  validationHandler(userCreateSchema, { check: 'body' }),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { name, email, password } = req.body
@@ -30,6 +33,7 @@ router.post(
 
 router.post(
   '/login',
+  validationHandler(userLoginSchema, { check: 'body' }),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body

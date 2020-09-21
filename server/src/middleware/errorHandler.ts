@@ -11,6 +11,13 @@ import { responseError } from '../network/response'
 
 const errorLogger = debug('app:Error')
 
+/**
+ * Send a Json with the error to client
+ * @param err - Error
+ * @param req - Request Objecte
+ * @param res - Response Object
+ * @param next - Next Function
+ */
 export const errorHandler = (
   err: ErrorResponse,
   req: express.Request,
