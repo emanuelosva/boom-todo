@@ -11,8 +11,21 @@ import { verifyToken } from '../utils'
 
 const prisma = PrismaDb.getPrismaClient()
 
+/**
+ * Authentication middleware by Bearer strategy.
+ * 
+ * Extrac the JWT from the authorization header, if the token
+ * is invalid or it undefined a Unauthorized error es sent, if
+ * the token is valid and the user in the payload exists, then
+ * the user data is set to req.user
+ */
 export const authenticateBearer = () => {
-  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+
+  return async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     const { authorization } = req.headers
     if (!authorization) {
       next(new ErrorResponse(401, ''))
