@@ -7,6 +7,8 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { validationHandler } from '../../middleware'
 import { responseSuccess } from '../../network/response'
+import { ErrorResponse } from '../../lib/errorClass'
+import { authenticateBearer } from '../../lib/auth/strategys/bearer.strategy'
 import { UserController } from './controller'
 import { userCreateSchema, userLoginSchema } from './schemas'
 
@@ -45,16 +47,15 @@ router.post(
   }
 )
 
-// router.get(
-//   '/',
-//   (
-//     req: express.Request,
-//     res: express.Response
-//   ) => {
-//     const { user } = req
-//     responseSuccess(res, user, 200, 'Current user info')
-//   }
-// )
+router.get(
+  '/current',
+  authenticateBearer(),
+  (req: Request, res: Response, next: NextFunction) => {
+    const { user } = req
+    if (!user) return next(new ErrorResponse(401, ''))
+    responseSuccess(res, user, 200, 'Current user info')
+  }
+)
 
 
 // router.patch(

@@ -14,7 +14,8 @@ export const config = {
     dev: process.env.NODE_ENV !== 'production',
   },
   auth: {
-    secret: process.env.JWT_SECRET,
+    secret: process.env.JWT_SECRET || 'secret',
+    algorithm: process.env.ALGORITHM_JWT || 'HS256',
     apiRoute: process.env.AUTH_API_ROUTE
   },
 }

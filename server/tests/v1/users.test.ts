@@ -6,11 +6,12 @@
 
 import supertest from 'supertest'
 import { app } from '../../src/app'
+import { getToken } from '../../src/lib/auth/utils'
 
 describe('Users Endpoints', () => {
   const request = supertest(app)
 
-  let userId: number
+  let userId = 5
   const newUser = { name: 'Stan', email: 'stanT@marvel.com', password: 'user123' }
 
   describe('POST /users/signup', () => {
@@ -79,7 +80,7 @@ describe('Users Endpoints', () => {
       expect(body.detail).toEqual('Login success')
       expect(typeof body.data.token).toBe('string')
       expect(typeof body.data.user).toBe('object')
-      expect(body.data.user.id).toEqual(5)
+      expect(body.data.user.id).toEqual(userId)
       done()
     })
 
@@ -113,6 +114,36 @@ describe('Users Endpoints', () => {
       done()
     })
 
+  })
+
+  describe('GET /users/current', () => {
+
+    test('Should return the user info', async (done) => {
+      const token = getToken({ userId })
+      const response = await request
+        .get('/v1/users/current')
+        .set('Authorization', `Bearer ${token}`)
+
+      const { body, status } = await response
+
+      expect(status).toEqual(200)
+      expect(body.error).toBeFalsy()
+      expect(body.detail).toEqual('Current user info')
+      expect(body.data.id).toEqual(userId)
+      done()
+    })
+
+    test('Should return a unauthorized error if no token', async (done) => {
+      const response = await request
+        .get('/v1/users/current')
+
+      const { body, status } = await response
+
+      expect(status).toEqual(401)
+      expect(body.error).toBeTruthy()
+      expect(body.detail).toEqual('Invalid credentials')
+      done()
+    })
   })
 
 })

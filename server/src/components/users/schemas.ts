@@ -33,9 +33,7 @@ const userInput = Joi.object({
   }),
 })
 
-/**
- * Create spefici schemas
- */
+
 export const userCreateSchema = userInput.tailor('create')
 export const userUpdateSchema = userInput.tailor('update')
 export const userLoginSchema = userInput.tailor('login')
