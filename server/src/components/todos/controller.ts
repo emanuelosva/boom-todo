@@ -50,6 +50,8 @@ export class TodoController {
     todoData: TodoUpdateInput
   ): Promise<Todo> {
     try {
+      const { dateTodo } = todoData
+      dateTodo ? todoData.dateTodo = new Date(String(dateTodo)) : ''
       return this.prisma.todo.update({
         where,
         data: todoData,
