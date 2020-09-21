@@ -9,8 +9,8 @@ import {
   Todo,
   TodoUpdateInput,
   TodoWhereUniqueInput,
+  UserWhereUniqueInput
 } from '@prisma/client'
-import { connect } from 'http2'
 import { PrismaDb } from '../../db'
 import { ErrorResponse } from '../../lib/errorClass'
 
@@ -39,6 +39,32 @@ export class TodoController {
         user: { connect: { id } }
       }
     })
+  }
+
+  async get(userQuery: UserWhereUniqueInput): Promise<Todo[]> {
+    return this.prisma.user.findOne({ where: userQuery }).todos()
+  }
+
+  async update(
+    where: TodoWhereUniqueInput,
+    todoData: TodoUpdateInput
+  ): Promise<Todo> {
+    try {
+      return this.prisma.todo.update({
+        where,
+        data: todoData,
+      })
+    } catch (error) {
+      return Promise.reject(new ErrorResponse(409, 'Invalid ID'))
+    }
+  }
+
+  async delete(where: TodoWhereUniqueInput): Promise<Todo> {
+    try {
+      return this.prisma.todo.delete({ where })
+    } catch (error) {
+      return Promise.reject(new ErrorResponse(409, 'Invalid ID'))
+    }
   }
 
 }

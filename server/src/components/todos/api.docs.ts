@@ -46,6 +46,13 @@
  */
 
 /**
+ * @typedef TodoResponseList
+ * @property {boolean} error.required - Error on requets - eg: false
+ * @property {string} detail.required - The response message - eg: Detail about Todo operation
+ * @property {Array<Todo>} data.required
+ */
+
+/**
  * @typedef UnauthorizedError
  * @property {boolean} error.required - Error on requets - eg: true
  * @property {string} detail.required - Error - eg: Invalid credentials
