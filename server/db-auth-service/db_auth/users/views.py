@@ -58,7 +58,7 @@ def login_view(request):
         # Encod the JWT
         to_encode = {'userId': user.id}
         to_encode.update({'exp': expire})
-        token = jwt.encode(to_encode, 'secret', algorithm=ALGORITHM)
+        token = jwt.encode(to_encode, JWT_SECRET, algorithm=ALGORITHM)
 
         response.update({'detail': 'TokenType: Bearer'})
         response.update({'token': token})
