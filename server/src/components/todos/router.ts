@@ -105,3 +105,27 @@ router.put(
     }
   }
 )
+
+/**
+ * Delete a todo
+ * @route DELETE /todos/{id}
+ * @group Todos - Operations about todo
+ * @param {number} id.path.required - The todo id - eg: 1
+ * @returns {TodoResponse.model} 200 - Todo Updated
+ * @returns {UnauthorizedError.model} 401 - Unauthorized Error
+ * @returns {ConflictError.model} 409 - Conflict Error
+ * @security JWT
+ */
+router.delete(
+  '/:id',
+  validationHandler(idSchema, { check: 'params' }),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params
+      const todo = await todoController.delete({ id: Number(id) })
+      responseSuccess(res, todo, 200, 'Todo deleted')
+    } catch (error) {
+      next(error)
+    }
+  }
+)

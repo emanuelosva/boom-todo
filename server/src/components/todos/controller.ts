@@ -52,10 +52,11 @@ export class TodoController {
     try {
       const { dateTodo } = todoData
       dateTodo ? todoData.dateTodo = new Date(String(dateTodo)) : ''
-      return this.prisma.todo.update({
+      const todo = await this.prisma.todo.update({
         where,
         data: todoData,
       })
+      return todo
     } catch (error) {
       return Promise.reject(new ErrorResponse(409, 'Invalid ID'))
     }
@@ -63,7 +64,8 @@ export class TodoController {
 
   async delete(where: TodoWhereUniqueInput): Promise<Todo> {
     try {
-      return this.prisma.todo.delete({ where })
+      const todo = await this.prisma.todo.delete({ where })
+      return todo
     } catch (error) {
       return Promise.reject(new ErrorResponse(409, 'Invalid ID'))
     }
