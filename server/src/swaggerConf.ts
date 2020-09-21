@@ -7,6 +7,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const expressSwagger = require('express-swagger-generator')
 import express from 'express'
+import { config } from './config'
 
 /**
  * General swagger settings
@@ -18,7 +19,7 @@ const swaggerConf = {
       version: '1.0.0',
       description: 'Boom Todo Api Api documentation. Powered By: `express-swagger-generator`',
     },
-    host: 'localhost:3000',
+    host: `localhost:${config.app.port}`,
     basePath: '/v1',
     produces: [
       "application/json",
