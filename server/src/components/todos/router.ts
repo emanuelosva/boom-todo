@@ -5,6 +5,7 @@
  */
 
 import express, { Request, Response, NextFunction } from 'express'
+import { TodoUpdateInput } from '@prisma/client'
 import { validationHandler } from '../../middleware'
 import { authenticateBearer } from '../../lib/auth/strategys/bearer.strategy'
 import { responseSuccess } from '../../network/response'
@@ -71,6 +72,34 @@ router.get(
       const userId = Number(user?.id)
       const todoList = await todoController.get({ id: userId }) || []
       responseSuccess(res, todoList, 200, 'Todos retrieved')
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+/**
+ * Update a todo
+ * @route PUT /todos/{id}
+ * @group Todos - Operations about todo
+ * @param {number} id.path.required - The todo id - eg: 1
+ * @param {TodoUpdate.model} todo.body.required - The todo info
+ * @returns {TodoResponse.model} 200 - Todo Updated
+ * @returns {BadRequetsError.model} 400 - Bad Request Error
+ * @returns {UnauthorizedError.model} 401 - Unauthorized Error
+ * @returns {ConflictError.model} 409 - Conflict Error
+ * @security JWT
+ */
+router.put(
+  '/:id',
+  validationHandler(idSchema, { check: 'params' }),
+  validationHandler(todoUpdateSchema, { check: 'body' }),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params
+      const updateTodoData = req.body as TodoUpdateInput
+      const todo = await todoController.update({ id: Number(id) }, updateTodoData)
+      responseSuccess(res, todo, 200, 'Todo updated')
     } catch (error) {
       next(error)
     }
