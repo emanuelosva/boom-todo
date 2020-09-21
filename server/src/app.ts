@@ -30,14 +30,11 @@ export const app: express.Application = express()
  * Swagger Docs [route: /api-docs]
  */
 swaggerServer(app)
-app.use('/', (req, res) => {
-  res.redirect('/api-docs')
-})
 
 /**
  * App logger
  */
-app.use(morgan('tiny'))
+app.use(morgan('dev'))
 
 /**
  * Security

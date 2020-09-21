@@ -34,7 +34,7 @@ const swaggerConf = {
     }
   },
   basedir: __dirname,
-  files: ['./components/**/*.ts'] //Path to the API handle folder
+  files: ['./components/**/*.ts', './components/**/*.js'] //Path to the API handle folder
 };
 
 

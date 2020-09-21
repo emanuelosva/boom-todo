@@ -7,6 +7,10 @@
     "lib": [
       "esnext"
     ],
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+  },
+  "exclude": [
+    "tests",
+    "jest.config.js"
+  ]
 }
