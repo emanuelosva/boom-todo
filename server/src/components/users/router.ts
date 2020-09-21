@@ -92,7 +92,7 @@ router.get(
 
 /**
  * Update a existing user
- * @route PUT /users/:id
+ * @route PUT /users/{id}
  * @group Users - Operations about user
  * @param {number} id.params.required - User id - eg: 114
  * @param {UserUpdate.model} userData.body - User data
@@ -123,7 +123,7 @@ router.put(
 
 /**
  * Delete a existing user
- * @route DELETE /users/:id
+ * @route DELETE /users/{id}
  * @group Users - Operations about user
  * @param {number} id.params.required - user id - eg: 47
  * @returns {UserResponse.model} 200 - The updated user info
