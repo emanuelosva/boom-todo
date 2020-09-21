@@ -140,6 +140,76 @@ describe('Todo ednpoints', () => {
       done()
     })
 
+    test('Should return a conflict error on invalid ID', async (done) => {
+      const token = getToken({ userId: user.id })
+      const invalidId = 999999
+      const response = await request
+        .put(`/v1/todos/${invalidId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({})
+
+      const { body, status } = response
+      expect(status).toEqual(409)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
+  })
+
+  describe('DELETE /post/:id', () => {
+
+    test('Should return a bad request on invalid id param', async (done) => {
+      const token = getToken({ userId: user.id })
+      const invalidId = 'thisIsInvalid'
+
+      const response = await request
+        .delete(`/v1/todos/${invalidId}`)
+        .set('Authorization', `Bearer ${token}`)
+
+      const { body, status } = response
+      expect(status).toEqual(400)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
+    test('Should return a unauthorized error if not token', async (done) => {
+      const response = await request
+        .delete(`/v1/todos/${1}`)
+
+      const { body, status } = response
+      expect(status).toEqual(401)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
+    test('Should return a conflict error on invalid ID', async (done) => {
+      const token = getToken({ userId: user.id })
+      const invalidId = 99999
+      const response = await request
+        .delete(`/v1/todos/${invalidId}`)
+        .set('Authorization', `Bearer ${token}`)
+
+      const { body, status } = response
+      expect(status).toEqual(409)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
+    test('Should return the deleted Todo', async (done) => {
+      const token = getToken({ userId: user.id })
+
+      const response = await request
+        .delete(`/v1/todos/${todoId || 1}`)
+        .set('Authorization', `Bearer ${token}`)
+
+      const { body, status } = response
+      expect(status).toEqual(200)
+      expect(body.error).toBeFalsy()
+      expect(body.detail).toEqual('Todo deleted')
+      expect(body.data.id).toEqual(todoId || 1)
+      done()
+    })
+
   })
 
 })
