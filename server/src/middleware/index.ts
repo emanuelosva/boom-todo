@@ -1,9 +1,7 @@
-import { notFoundHandler } from './notFoundHandler'
-import { errorHandler } from './errorHandler'
-import { validationHandler } from './validationHandler'
+/**
+ * @fileoverview Middlewares
+ */
 
-export {
-  notFoundHandler,
-  errorHandler,
-  validationHandler,
-}
+export * from './notFoundHandler'
+export * from './errorHandler'
+export * from './validationHandler'
