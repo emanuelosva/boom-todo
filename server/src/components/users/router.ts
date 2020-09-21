@@ -23,7 +23,18 @@ import {
 export const router = express.Router()
 const userController = new UserController()
 
+/**
+ * Model Docs are defined in ./api.docs.ts
+ */
 
+/**
+ * Register a new user
+ * @route POST /users/signup
+ * @group Users - Operations about user
+ * @param {UserCreate.model} user.body.required - The user data
+ * @returns {AuthResponse.model} 201 - User created & logged
+ * @returns {GeneralError.model}  default - Response Error
+ */
 router.post(
   '/signup',
   validationHandler(userCreateSchema, { check: 'body' }),
@@ -38,6 +49,15 @@ router.post(
   }
 )
 
+/**
+ * Login a user. Return the user data and a valid JWT
+ * @route POST /users/login
+ * @group Users - Operations about user
+ * @param {UserLogin.model} credentials.body.required
+ * @returns {AuthResponse.model} 200 - Login Response
+ * @returns {BadRequetsError.model} 400 - Bad Request
+ * @returns {UnauthorizedError.model} 401 - Unauthorized
+ */
 router.post(
   '/login',
   validationHandler(userLoginSchema, { check: 'body' }),
@@ -52,6 +72,14 @@ router.post(
   }
 )
 
+/**
+ * Get the info of the curret user
+ * @route GET /users/current
+ * @group Users - Operations about user
+ * @returns {UserResponse.model} 200 - Curent user info
+ * @returns {UnauthorizedError.model} 401 - Unauthorized response
+ * @security JWT
+ */
 router.get(
   '/current',
   authenticateBearer(),
@@ -62,7 +90,17 @@ router.get(
   }
 )
 
-
+/**
+ * Update a existing user
+ * @route PUT /users/:id
+ * @group Users - Operations about user
+ * @param {number} id.params.required - User id - eg: 114
+ * @param {UserUpdate.model} userData.body - User data
+ * @returns {UserResponse.model} 200 - The updated user info
+ * @returns {BadRequetsError.model} 400 - Bad Request
+ * @returns {UnauthorizedError.model} 401 - Unauthorized
+ * @security JWT
+ */
 router.put(
   '/:id',
   authenticateBearer(),
@@ -83,6 +121,16 @@ router.put(
   }
 )
 
+/**
+ * Delete a existing user
+ * @route DELETE /users/:id
+ * @group Users - Operations about user
+ * @param {number} id.params.required - user id - eg: 47
+ * @returns {UserResponse.model} 200 - The updated user info
+ * @returns {BadRequetsError.model} 400 - Bad Request
+ * @returns {UnauthorizedError.model} 401 - Unauthorized
+ * @security JWT
+ */
 router.delete(
   '/:id',
   authenticateBearer(),
