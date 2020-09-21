@@ -63,4 +63,33 @@ describe('Todo ednpoints', () => {
     })
 
   })
+
+  describe.only('GET /todos', () => {
+
+    test('Should return a list with todos', async (done) => {
+      const token = getToken({ userId: user.id })
+      const response = await request
+        .get('/v1/todos')
+        .set('Authorization', `Bearer ${token}`)
+
+      const { body, status } = response
+      expect(status).toEqual(200)
+      expect(body.error).toBeFalsy()
+      expect(body.detail).toEqual('Todos retrieved')
+      expect(typeof body.data).toBe('object')
+      done()
+    })
+
+    test('Should return a unauthorized error if not token', async (done) => {
+      const response = await request
+        .get('/v1/todos')
+
+      const { body, status } = response
+      expect(status).toEqual(401)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
+  })
+
 })
