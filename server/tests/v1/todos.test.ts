@@ -64,12 +64,12 @@ describe('Todo ednpoints', () => {
 
   })
 
-  describe('GET /todos', () => {
+  describe('GET /todos/all', () => {
 
     test('Should return a list with todos', async (done) => {
       const token = getToken({ userId: user.id })
       const response = await request
-        .get('/v1/todos')
+        .get('/v1/todos/all')
         .set('Authorization', `Bearer ${token}`)
 
       const { body, status } = response
@@ -86,6 +86,36 @@ describe('Todo ednpoints', () => {
 
       const { body, status } = response
       expect(status).toEqual(401)
+      expect(body.error).toBeTruthy()
+      done()
+    })
+
+  })
+
+  describe('GET /posts/:id', () => {
+
+    test('Should response with todo info', async (done) => {
+      const token = getToken({ userId: user.id })
+      const response = await request
+        .get(`/v1/todos/${todoId}`)
+        .set('Authorization', `Bearer ${token}`)
+
+      const { body, status } = response
+      expect(status).toEqual(200)
+      expect(body.error).toBeFalsy()
+      expect(body.detail).toEqual('Todo retrieved')
+      expect(body.data.id).toEqual(todoId)
+      done()
+    })
+
+    test('Should response with 404 error on invalid ID', async (done) => {
+      const token = getToken({ userId: user.id })
+      const response = await request
+        .get(`/v1/todos/${99999}`)
+        .set('Authorization', `Bearer ${token}`)
+
+      const { body, status } = response
+      expect(status).toEqual(404)
       expect(body.error).toBeTruthy()
       done()
     })
