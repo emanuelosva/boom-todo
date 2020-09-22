@@ -5,6 +5,9 @@
  */
 
 import express from 'express'
+import { config } from '../config'
+
+const { dev: devMode } = config.app
 
 const STATUS_DETAILS: Record<string, string> = {
   '200': 'Ok',
@@ -33,7 +36,13 @@ export const responseSuccess = (
   detail: string,
 ): void => {
   const statusCode = status || res.statusCode || 200
-  const statusDetail = detail || res.statusMessage || STATUS_DETAILS[statusCode]
+
+  let optionalMessage: string
+  devMode
+    ? optionalMessage = res.statusMessage || STATUS_DETAILS[statusCode]
+    : optionalMessage = STATUS_DETAILS[statusCode]
+
+  const statusDetail = detail || optionalMessage
 
   res
     .status(statusCode)
