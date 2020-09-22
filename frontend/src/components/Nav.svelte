@@ -1,12 +1,21 @@
 <script>
   export let segment;
+  import Logo from "./Logo.svelte";
 </script>
 
 <style>
   nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid rgba(255, 62, 0, 0.1);
     font-weight: 300;
     padding: 0 1em;
+  }
+
+  .Nav-logo {
+    margin: 0;
+    padding: 0;
   }
 
   ul {
@@ -35,7 +44,7 @@
     content: "";
     width: calc(100% - 1em);
     height: 2px;
-    background-color: rgb(255, 62, 0);
+    background-color: #ff7f51;
     display: block;
     bottom: -1px;
   }
@@ -48,23 +57,26 @@
 </style>
 
 <nav class="Nav">
+  <div class="Nav-logo">
+    <Logo />
+  </div>
   <ul>
     <li>
       <a
         aria-current={segment === undefined ? 'page' : undefined}
-        href=".">home</a>
+        href=".">Home</a>
     </li>
     <li>
       <a
         aria-current={segment === 'about' ? 'page' : undefined}
-        href="about">about</a>
+        href="about">About</a>
     </li>
 
     <li>
       <a
         rel="prefetch"
-        aria-current={segment === 'blog' ? 'page' : undefined}
-        href="blog">blog</a>
+        aria-current={segment === 'login' ? 'page' : undefined}
+        href="login"><strong>Login</strong></a>
     </li>
   </ul>
 </nav>
