@@ -6,7 +6,6 @@
 
 import jwt from 'jsonwebtoken'
 import { config } from '../../config'
-import { ErrorResponse } from '../../lib/errorClass'
 
 const { secret } = config.auth
 
@@ -24,6 +23,10 @@ export const getToken = (payload: tokenPayload): string => {
 }
 
 
+/**
+ * Check if token is valid and decode it.
+ * @param token - The encoded JWT
+ */
 export const verifyToken = (token: string): tokenPayload => {
   const payload = jwt.verify(token, secret) as tokenPayload
   return payload
