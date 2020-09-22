@@ -41,8 +41,8 @@ export const authenticateBearer = () => {
       const user = await prisma.user.findOne({ where: { id: userId } })
       if (!user) {
         return next(new ErrorResponse(401, ''))
-
       }
+
       req.user = user
       return next()
     } catch (error) {
