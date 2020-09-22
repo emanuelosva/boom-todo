@@ -45,6 +45,12 @@ export class TodoController {
     return this.prisma.user.findOne({ where: userQuery }).todos()
   }
 
+  async getOne(where: TodoWhereUniqueInput): Promise<Todo> {
+    const todo = await this.prisma.todo.findOne({ where })
+    if (!todo) return Promise.reject(new ErrorResponse(404, 'Todo not found'))
+    return todo
+  }
+
   async update(
     where: TodoWhereUniqueInput,
     todoData: TodoUpdateInput
