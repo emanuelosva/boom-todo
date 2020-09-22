@@ -57,7 +57,7 @@ router.post(
 
 /**
  * Get all Todos of the current user
- * @route GET /todos
+ * @route GET /todos/all
  * @group Todos - Operations about todo
  * @returns {TodoResponseList.model} 200 - Todo List Response
  * @returns {BadRequetsError.model} 400 - Bad Request Error
@@ -65,13 +65,38 @@ router.post(
  * @security JWT
  */
 router.get(
-  '/',
+  '/all',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user } = req
       const userId = Number(user?.id)
       const todoList = await todoController.get({ id: userId }) || []
       responseSuccess(res, todoList, 200, 'Todos retrieved')
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+/**
+ * Get all Todos of the current user
+ * @route GET /todos/{id}
+ * @group Todos - Operations about todo
+ * @param {number} id.path.required - The todo id - eg: 114
+ * @returns {TodoResponse.model} 200 - Todo List Response
+ * @returns {BadRequetsError.model} 400 - Bad Request Error
+ * @returns {UnauthorizedError.model} 401 - Unauthorized Error
+ * @returns {NotFoundError.model} 404 - Not Found Error
+ * @security JWT
+ */
+router.get(
+  '/:id',
+  validationHandler(idSchema, { check: 'params' }),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params
+      const todo = await todoController.getOne({ id: Number(id) })
+      responseSuccess(res, todo, 200, 'Todo retrieved')
     } catch (error) {
       next(error)
     }
