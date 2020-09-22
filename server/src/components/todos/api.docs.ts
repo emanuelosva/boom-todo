@@ -67,6 +67,13 @@
  */
 
 /**
+ * @typedef NotFoundError
+ * @property {boolean} error.required - Error on requets - eg: true
+ * @property {string} detail.required - Error - eg: Not found
+ * @property {object} data - No data - eg: {}
+ */
+
+/**
  * @typedef ConfiltError
  * @property {boolean} error.required - Error on requets - eg: true
  * @property {string} detail.required - Error - eg: Conflict. Invalid ID
