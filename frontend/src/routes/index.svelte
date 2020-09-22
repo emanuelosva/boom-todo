@@ -23,5 +23,10 @@
 </svelte:head>
 
 <div class="Home">
-  <h1>Home</h1>
+  <div class="Home-container container-fluid">
+    <div class="row">
+      <div class="col-6 col-md-6">Call To action</div>
+      <div class="col-6 col-md-6">Imagen</div>
+    </div>
+  </div>
 </div>
