@@ -11,7 +11,7 @@ import compression from 'compression';
 import * as sapper from '@sapper/server';
 
 const PORT = process.env.PORT || 3000;
-const dev = process.env.NODE_ENV !== 'production';
+const dev = process.env.NODE_ENV === 'development';
 
 /**
  * Express server instance
@@ -29,7 +29,7 @@ server.use(cookieParse());
  * Static server
  */
 server.use(compression({ threshold: 0 }));
-server.use(sirv('statuc', { dev }));
+server.use(sirv('static', { dev }));
 
 /**
  * Sapper middleware & session

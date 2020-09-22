@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "NODE_ENV=development PORT=3000 sapper dev",
     "build": "NODE_ENV=production sapper build",
-    "export": "sapper export",
+    "export": "NODE_ENV=production sapper build",
     "start": "NODE_ENV=production PORT=3000 node __sapper__/build"
   },
   "dependencies": {

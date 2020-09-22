@@ -5,7 +5,7 @@ const config = require('sapper/config/webpack.js');
 const pkg = require('./package.json');
 
 const mode = process.env.NODE_ENV;
-const dev = mode !== 'production';
+const dev = mode === 'development';
 
 const alias = { svelte: path.resolve('node_modules', 'svelte') };
 const extensions = ['.mjs', '.js', '.json', '.svelte', '.html'];
@@ -25,14 +25,16 @@ module.exports = {
             options: {
               dev,
               hydratable: true,
-              hotReload: false,
-            },
-          },
-        },
-      ],
+              hotReload: false // pending https://github.com/sveltejs/svelte/issues/2377
+            }
+          }
+        }
+      ]
     },
     mode,
     plugins: [
+      // pending https://github.com/sveltejs/svelte/issues/2377
+      // dev && new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         'process.browser': true,
         'process.env.NODE_ENV': JSON.stringify(mode)
@@ -57,7 +59,7 @@ module.exports = {
               css: false,
               generate: 'ssr',
               hydratable: true,
-              dev,
+              dev
             }
           }
         }
@@ -75,6 +77,6 @@ module.exports = {
   serviceworker: {
     entry: config.serviceworker.entry(),
     output: config.serviceworker.output(),
-    mode,
+    mode
   }
 };
