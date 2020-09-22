@@ -1,0 +1,24 @@
+{
+  "name": "boom-todo-ui",
+  "description": "Another Todo List",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "NODE_ENV=development PORT=3000 sapper dev",
+    "build": "NODE_ENV=production sapper build",
+    "export": "sapper export",
+    "start": "NODE_ENV=production PORT=3000 node __sapper__/build"
+  },
+  "dependencies": {
+    "compression": "^1.7.1",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "sirv": "^1.0.0"
+  },
+  "devDependencies": {
+    "sapper": "^0.28.0",
+    "svelte": "^3.17.3",
+    "svelte-loader": "^2.9.0",
+    "webpack": "^4.7.0",
+    "webpack-modules": "^1.0.0"
+  }
+}
