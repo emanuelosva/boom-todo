@@ -12,7 +12,7 @@
   h2 {
     margin: 0.2em 0 0 0;
     font-family: "Montserrat Subrayada", sans-serif;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: 700;
   }
   @media (min-width: 480px) {
