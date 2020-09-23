@@ -19,6 +19,7 @@
     font-family: "Montserrat Subrayada", sans-serif;
     font-size: 1em;
     font-weight: 700;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.245);
   }
   @media (min-width: 480px) {
     h2 {
