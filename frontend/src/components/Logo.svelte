@@ -9,6 +9,11 @@
     justify-content: center;
     align-items: center;
   }
+  a {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+  }
   h2 {
     margin: 0.2em 0 0 0;
     font-family: "Montserrat Subrayada", sans-serif;
@@ -23,5 +28,7 @@
 </style>
 
 <div class="Logo">
-  <h2>BoomTodo</h2>
+  <a href="/">
+    <h2>BoomTodo</h2>
+  </a>
 </div>
