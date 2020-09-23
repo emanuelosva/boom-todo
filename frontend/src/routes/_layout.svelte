@@ -1,7 +1,15 @@
-<script>
-  import Nav from "../components/Nav.svelte";
+<script context="module">
+  export async function preload(page, session) {
+    const { token } = session;
+    return { sessionActive: token };
+  }
+</script>
 
+<script>
+  export let sessionActive;
   export let segment;
+
+  import PublicNav from "../components/PublicNav.svelte";
 </script>
 
 <style>
@@ -14,7 +22,7 @@
   }
 </style>
 
-<Nav {segment} />
+<PublicNav {segment} {sessionActive} />
 
 <main>
   <slot />
