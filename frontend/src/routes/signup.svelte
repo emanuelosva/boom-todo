@@ -1,3 +1,13 @@
+<script context="module">
+  export async function preload(page, session) {
+    const { token } = session;
+    if (token) {
+      // If the session is active login is not needed.
+      return this.redirect(302, "/workspace");
+    }
+  }
+</script>
+
 <script>
   import SubmitButton from "../components/SubmitButton.svelte";
   import WarningAuthMessage from "../components/WarningAuthMessage.svelte";
