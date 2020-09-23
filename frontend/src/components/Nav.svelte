@@ -1,83 +1,95 @@
 <script>
+  export let sessionActive;
   export let segment;
-  import Logo from "./Logo.svelte";
 </script>
 
 <style>
-  nav {
-    padding: 0 1em;
+  .Nav-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+  }
+  nav {
+    max-width: 680px;
+    margin: 0;
+    padding: 0 1em;
+    display: grid;
+    grid-template-columns: minmax(auto, 680px);
+    justify-content: center;
     align-items: center;
     border-bottom: 1px solid rgba(255, 62, 0, 0.1);
-    font-weight: 300;
+    font-weight: 400;
     background-color: #fff;
   }
-
-  .Nav-logo {
-    margin: 0;
-    padding: 0;
-  }
-
   ul {
     margin: 0;
     padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-
   ul::after {
     content: "";
     display: block;
     clear: both;
   }
-
   li {
-    display: block;
-    float: left;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-
   [aria-current] {
     position: relative;
     display: inline-block;
   }
-
   [aria-current]::after {
     position: absolute;
     content: "";
     width: calc(100% - 1em);
-    height: 2px;
+    height: 4px;
     background-color: #ff7f51;
     display: block;
     bottom: -1px;
   }
-
   a {
+    width: 80%;
+    text-align: center;
     text-decoration: none;
     padding: 1em 0.5em;
     display: block;
   }
 </style>
 
-<nav class="Nav">
-  <div class="Nav-logo">
-    <Logo />
+{#if sessionActive}
+  <div class="Nav-container">
+    <nav class="Nav">
+      <ul>
+        <li>
+          <a
+            rel="prefetch"
+            aria-current={segment === undefined ? 'page' : undefined}
+            href="/workspace">Home</a>
+        </li>
+        <li>
+          <a
+            rel="prefetch"
+            aria-current={segment === 'categories' ? 'page' : undefined}
+            href="/workspace/categories">Categories</a>
+        </li>
+        <li>
+          <a
+            rel="prefetch"
+            aria-current={segment === 'todos' ? 'page' : undefined}
+            href="/workspace/todos/new">New</a>
+        </li>
+        <li>
+          <a
+            rel="prefetch"
+            aria-current={segment === 'profile' ? 'page' : undefined}
+            href="/workspace/profile">Profile</a>
+        </li>
+      </ul>
+    </nav>
   </div>
-  <ul>
-    <li>
-      <a
-        aria-current={segment === undefined ? 'page' : undefined}
-        href=".">Home</a>
-    </li>
-    <li>
-      <a
-        aria-current={segment === 'about' ? 'page' : undefined}
-        href="about">About</a>
-    </li>
-
-    <li>
-      <a
-        rel="prefetch"
-        aria-current={segment === 'login' ? 'page' : undefined}
-        href="login"><strong>Login</strong></a>
-    </li>
-  </ul>
-</nav>
+{/if}
