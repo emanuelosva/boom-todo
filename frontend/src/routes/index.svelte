@@ -66,7 +66,7 @@
   }
   @media (min-width: 480px) {
     .Home-signup {
-      width: 40%;
+      width: 50%;
     }
     .Home-image img {
       max-width: 420px;
