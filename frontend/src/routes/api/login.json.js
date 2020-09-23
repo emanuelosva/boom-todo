@@ -35,6 +35,6 @@ export async function post(req, res) {
     res.status(200).json({ user, token }).end();
   } catch (error) {
     const { status, data } = error.response;
-    return res.status(status).json(data).end();
+    res.status(status).json(data).end();
   }
 };
