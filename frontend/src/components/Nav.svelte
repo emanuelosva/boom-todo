@@ -61,6 +61,13 @@
     padding: 1em 0.5em;
     display: block;
   }
+  i {
+    text-align: center;
+    font-size: 24px;
+  }
+  [aria-current] i {
+    color: #ff7f51;
+  }
 </style>
 
 {#if sessionActive}
@@ -71,25 +78,33 @@
           <a
             rel="prefetch"
             aria-current={segment === undefined ? 'page' : undefined}
-            href="/workspace">Home</a>
+            href="/workspace">
+            <i class="fas fa-home" />
+          </a>
         </li>
         <li>
           <a
             rel="prefetch"
             aria-current={segment === 'categories' ? 'page' : undefined}
-            href="/workspace/categories">Categories</a>
+            href="/workspace/categories">
+            <i class="fas fa-tags" />
+          </a>
         </li>
         <li>
           <a
             rel="prefetch"
             aria-current={segment === 'todos' ? 'page' : undefined}
-            href="/workspace/todos/new">New</a>
+            href="/workspace/todos/new">
+            <i class="far fa-plus-square" />
+          </a>
         </li>
         <li>
           <a
             rel="prefetch"
             aria-current={segment === 'profile' ? 'page' : undefined}
-            href="/workspace/profile">Profile</a>
+            href="/workspace/profile">
+            <i class="far fa-user" />
+          </a>
         </li>
       </ul>
     </nav>
