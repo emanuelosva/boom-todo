@@ -14,16 +14,18 @@
     const { data: todosResponse } = await fetchApi.get("/todos/all", token);
     const todosList = todosResponse.data;
 
-    return { userData: user, todosList };
+    return { userData: user, todosList, token };
   }
 </script>
 
 <script>
   export let userData;
   export let todosList;
+  export let token;
 
   import SearchBar from "../../components/SearchBar.svelte";
   import TodoCard from "../../components/TodoCard.svelte";
+  import NotTodosMessage from "../../components/NotTodosMessage.svelte";
 
   import { user, todos, filterTodos } from "../../context";
 
@@ -50,6 +52,7 @@
   }
   .Workspace-todos {
     box-sizing: border-box;
+    min-height: 100vh;
     display: grid;
     grid-template-columns: minmax(auto, 680px);
     justify-content: center;
@@ -67,7 +70,7 @@
     font-size: 24px;
   }
   .Todos-list {
-    margin: 0.5em 2em;
+    margin: 0.5em 1em;
     display: flex;
     flex-direction: column;
   }
@@ -97,14 +100,14 @@
       <div class="Todos-list">
         {#if $filterTodos.length}
           {#each $filterTodos as todo}
-            <TodoCard {todo} />
-            <!-- <div class="Todo-container">{todo.title}</div> -->
+            <TodoCard {todo} {token} />
           {/each}
         {:else}
           {#each $todos as todo}
-            <TodoCard {todo} />
-            <!-- <div class="Todo-container">{todo.title}</div> -->
-          {:else}Not todos{/each} // Mensaje de not todos
+            <TodoCard {todo} {token} />
+          {:else}
+            <NotTodosMessage />
+          {/each}
         {/if}
       </div>
     </div>
