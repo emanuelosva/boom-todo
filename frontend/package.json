@@ -14,7 +14,8 @@
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
-    "sirv": "^1.0.0"
+    "sirv": "^1.0.0",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "sapper": "^0.28.0",
