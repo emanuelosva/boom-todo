@@ -3,6 +3,7 @@
   export let token;
 
   import { fetchApi } from "../utils";
+  import { updateTodo } from "../context";
 
   const getPrettyDate = (dateString) => {
     const allDate = String(new Date(dateString));
@@ -16,6 +17,8 @@
   };
 
   const toggleCompleted = async (id, status) => {
+    todo.completed = status;
+    updateTodo(id, todo);
     await fetchApi.put(`/todos/${id}`, { completed: status }, token);
   };
 </script>

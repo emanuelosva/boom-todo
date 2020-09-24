@@ -33,6 +33,11 @@
   user.set(userData);
   filterTodos.set([]); // Initialice as void array
   todos.set(todosList);
+
+  $: orderedTodos = $todos.sort((a, b) => {
+    if (a.completed > b.completed) return 1;
+    return -1;
+  });
 </script>
 
 <style>
@@ -103,7 +108,7 @@
             <TodoCard {todo} {token} />
           {/each}
         {:else}
-          {#each $todos as todo}
+          {#each orderedTodos as todo}
             <TodoCard {todo} {token} />
           {:else}
             <NotTodosMessage />
