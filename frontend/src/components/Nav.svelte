@@ -91,8 +91,8 @@
         <li>
           <a
             rel="prefetch"
-            aria-current={segment === 'todos' ? 'page' : undefined}
-            href="/workspace/todos/new">
+            aria-current={segment === 'new' ? 'page' : undefined}
+            href="/workspace/new">
             <i class="far fa-plus-square" />
           </a>
         </li>
@@ -101,7 +101,7 @@
             rel="prefetch"
             aria-current={segment === 'profile' ? 'page' : undefined}
             href="/workspace/profile">
-            <i class="far fa-user" />
+            <i class="fas fa-user-cog" />
           </a>
         </li>
       </ul>
