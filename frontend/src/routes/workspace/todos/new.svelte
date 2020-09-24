@@ -31,7 +31,10 @@
 
     const body = { title, content, dateTodo, tag, isUrgent };
     const { data, status } = await fetchApi.post("/todos", body, token);
-    if (status !== 201) {
+    if (status === 400) {
+      return (warningMessage = data.detail);
+    }
+    if (status === 401) {
       await fetch("/api/logout.json", { method: "POST" });
       window.location.href = "/login";
     }
@@ -145,6 +148,10 @@
     }
   }
 </style>
+
+<svelte:head>
+  <title>New Todo</title>
+</svelte:head>
 
 <div class="NewTodo">
   <div class="NewTodo-container">

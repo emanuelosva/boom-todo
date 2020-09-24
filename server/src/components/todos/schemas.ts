@@ -17,11 +17,11 @@ export const idSchema = Joi.object({
  * Objet Schema for Body Requests
  */
 const todoInput = Joi.object({
-  title: Joi.string().min(2).max(128).alter({
+  title: Joi.string().min(1).max(128).alter({
     create: schema => schema.required(),
     update: schema => schema.optional(),
   }),
-  content: Joi.string().min(2).max(1024).alter({
+  content: Joi.string().max(1024).alter({
     create: schema => schema.required(),
     update: schema => schema.optional(),
   }),

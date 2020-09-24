@@ -18,8 +18,6 @@
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid rgba(255, 62, 0, 0.1);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
     font-weight: 400;
     background-color: #fff;
   }

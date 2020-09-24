@@ -23,6 +23,7 @@
   export let todosList;
 
   import SearchBar from "../../components/SearchBar.svelte";
+  import TodoCard from "../../components/TodoCard.svelte";
 
   import { user, todos, filterTodos } from "../../context";
 
@@ -39,39 +40,70 @@
     flex-direction: column;
     justify-content: center;
   }
-  .Worskpace-info {
+  .Workspace-info {
     padding: 0.5em 2em 1em 2em;
   }
+  .Workspace-info h2 {
+    margin-bottom: 0.5em;
+    color: #fff;
+    font-size: 28px;
+  }
   .Workspace-todos {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 56px;
-    top: 220px;
-    padding: 2em;
-    border-top-left-radius: 40px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(auto, 680px);
+    justify-content: center;
+    align-content: flex-start;
+    padding: 0.5em 0em;
+    border-top-left-radius: 48px;
     background-color: #fff;
+  }
+  .Todos-select {
+    margin: 0 2em;
+  }
+  .Todos-select p {
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 24px;
+  }
+  .Todos-list {
+    margin: 0.5em 2em;
+    display: flex;
+    flex-direction: column;
+  }
+  .divSection {
+    width: 20%;
+    height: 3px;
+    margin-bottom: 1.5em;
+    background-color: #ff7f51;
   }
 </style>
 
+<svelte:head>
+  <title>Boom Todo</title>
+</svelte:head>
+
 <div class="Workspace">
   <div class="Workspace-container">
-    <div class="Worskpace-info">
+    <div class="Workspace-info">
       <h2>Hello, <strong>{$user.name}</strong></h2>
       <SearchBar />
     </div>
     <div class="Workspace-todos">
       <div class="Todos-select">
-        <p>Today</p>
+        <p>My Todos</p>
+        <div class="divSection" />
       </div>
       <div class="Todos-list">
         {#if $filterTodos.length}
           {#each $filterTodos as todo}
-            <div class="Todo-container">{todo.title}</div>
+            <TodoCard {todo} />
+            <!-- <div class="Todo-container">{todo.title}</div> -->
           {/each}
         {:else}
           {#each $todos as todo}
-            <div class="Todo-container">{todo.title}</div>
+            <TodoCard {todo} />
+            <!-- <div class="Todo-container">{todo.title}</div> -->
           {:else}Not todos{/each} // Mensaje de not todos
         {/if}
       </div>

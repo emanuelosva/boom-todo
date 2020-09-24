@@ -39,7 +39,7 @@
     height: 48px;
     padding: 0 1.2em;
     display: flex;
-    justify-content: space-between;
+    justify-content: baseline;
     align-items: center;
     border-radius: 24px;
     background-color: #2b49c3;
@@ -48,6 +48,9 @@
     width: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   .SearchBar input {
     border: none;
@@ -66,6 +69,9 @@
     background-color: transparent;
     border: transparent;
   }
+  .SearchBar label {
+    display: none;
+  }
   .SearchBar-icon {
     color: rgba(255, 255, 255, 0.707);
   }
@@ -80,7 +86,9 @@
         id="search"
         placeholder={searchMessage}
         bind:value={searchString} />
-      <button class="SearchBar-icon" type="submit">Lupa</button>
+      <button class="SearchBar-icon" type="submit">
+        <i class="fas fa-search" />
+      </button>
     </form>
   </div>
 </div>
