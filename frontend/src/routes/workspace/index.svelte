@@ -26,6 +26,7 @@
 
   import { user, todos, filterTodos } from "../../context";
 
+  // Actualize the state
   user.set(userData);
   filterTodos.set([]); // Initialice as void array
   todos.set(todosList);
@@ -71,7 +72,7 @@
         {:else}
           {#each $todos as todo}
             <div class="Todo-container">{todo.title}</div>
-          {:else}Not todos{/each}
+          {:else}Not todos{/each} // Mensaje de not todos
         {/if}
       </div>
     </div>
