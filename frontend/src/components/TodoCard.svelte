@@ -69,6 +69,11 @@
     font-weight: 500;
     color: rgba(0, 0, 0, 0.5);
   }
+  .Todo-info i {
+    display: inline;
+    color: rgba(252, 14, 14, 0.945);
+    margin-left: 5px;
+  }
 
   /* Checkbox */
   .container {
@@ -134,7 +139,10 @@
       <div class="Todo-icon__container"><i class={selectIcon(todo.tag)} /></div>
     </div>
     <a class="Todo-info" href="/workspace/todos/{todo.id}">
-      <h3>{todo.title}</h3>
+      <span>
+        <h3>{todo.title}</h3>
+        {#if todo.isUrgent}<i class="fas fa-bolt" />{/if}
+      </span>
       <p>{getPrettyDate(todo.dateTodo)}</p>
     </a>
     <div class="Todo-completed">
