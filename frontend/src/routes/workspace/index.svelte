@@ -34,7 +34,12 @@
   filterTodos.set([]); // Initialice as void array
   todos.set(todosList);
 
-  $: orderedTodos = $todos.sort((a, b) => {
+  $: orderedByDate = $todos.sort((a, b) => {
+    if (a.dateTodo > b.dateTodo) return 1;
+    return -1;
+  });
+
+  $: orderedTodos = orderedByDate.sort((a, b) => {
     if (a.completed > b.completed) return 1;
     return -1;
   });
