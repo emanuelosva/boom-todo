@@ -11,7 +11,7 @@
   import SubmitButton from "../../components/SubmitButton.svelte";
 
   import { goto } from "@sapper/app";
-  import { fetchApi } from "../../utils";
+  import { fetchApi, logout } from "../../utils";
 
   let title = "";
   let content = "";
@@ -35,8 +35,7 @@
       return (warningMessage = data.detail);
     }
     if (status === 401) {
-      await fetch("/api/logout.json", { method: "POST" });
-      window.location.href = "/login";
+      await logout();
     }
 
     await goto("/workspace");

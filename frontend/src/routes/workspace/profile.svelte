@@ -14,14 +14,9 @@
 
   import swal from "sweetalert";
   import { user } from "../../context";
-  import { fetchApi } from "../../utils";
+  import { fetchApi, logout } from "../../utils";
 
   let updateMessage = "";
-
-  const logout = async () => {
-    await fetch("/api/logout.json", { method: "POST" });
-    window.location.href = "/login";
-  };
 
   const updateUser = async () => {
     const { id, name, email } = $user;
@@ -181,6 +176,10 @@
     }
   }
 </style>
+
+<svelte:head>
+  <title>Profile</title>
+</svelte:head>
 
 <div class="Profile">
   <div class="Profile-container">
