@@ -114,6 +114,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Statistics</title>
+</svelte:head>
+
 <div class="Categories">
   <div class="Categories-container">
     <div class="Categories-title">
