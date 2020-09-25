@@ -3,7 +3,7 @@
   "description": "Another Todo List",
   "version": "0.0.1",
   "scripts": {
-    "dev": "NODE_ENV=development PORT=3000 sapper dev",
+    "dev": "NODE_ENV=development PORT=3000 sapper dev --no-hot",
     "build": "NODE_ENV=production sapper build",
     "export": "NODE_ENV=production sapper build",
     "start": "NODE_ENV=production PORT=3000 node __sapper__/build"
