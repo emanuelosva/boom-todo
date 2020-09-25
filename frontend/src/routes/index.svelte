@@ -1,4 +1,7 @@
-<script>
+<script context="module">
+  export async function preload(page, { token }) {
+    if (token) return this.redirect(302, "/workspace");
+  }
 </script>
 
 <style>
