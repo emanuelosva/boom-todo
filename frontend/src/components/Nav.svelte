@@ -83,9 +83,9 @@
         <li>
           <a
             rel="prefetch"
-            aria-current={segment === 'categories' ? 'page' : undefined}
-            href="/workspace/categories">
-            <i class="fas fa-tags" />
+            aria-current={segment === 'statistics' ? 'page' : undefined}
+            href="/workspace/statistics">
+            <i class="fas fa-chart-line" />
           </a>
         </li>
         <li>
