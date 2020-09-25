@@ -17,9 +17,22 @@ module.exports = {
       watch: true,
       exec_mode: 'cluster',
       ignore_watch: ['[\/\\]\./', 'node_modules'],
+      wait_ready: true,
       env: {
         NODE_ENV: 'production',
         PORT: 5000,
+      }
+    },
+    {
+      name: 'WEB_SERVICE',
+      cwd: 'frontend',
+      script: '__sapper__/build/index.js',
+      watch: true,
+      exec_mode: 'cluster',
+      ignore_watch: ['[\/\\]\./', 'node_modules'],
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3000,
       }
     }
   ],
