@@ -99,7 +99,7 @@
 <div class="Workspace">
   <div class="Workspace-container">
     <div class="Workspace-info">
-      <h2>Hello, <strong>{$user.name}</strong></h2>
+      <h2>Hello, <strong>{$user.name || '...'}</strong></h2>
       <SearchBar />
     </div>
     <div class="Workspace-todos">
