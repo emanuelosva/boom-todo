@@ -1,25 +1,29 @@
 <script context="module">
+  import { fetchApi } from "../../../utils";
+
   export async function preload({ params }, session) {
-    const { id } = params;
     const { token } = session;
-    return { id, token };
+    const { id } = params;
+
+    const { data, status } = await fetchApi.get(`/todos/${id}`, token);
+    if (status === 404) return this.error(404, "Not Found");
+    return { todo: data.data, token };
   }
 </script>
 
 <script>
-  export let id;
   export let token;
+  export let todo;
 
   import SubmitButton from "../../../components/SubmitButton.svelte";
 
   import swal from "sweetalert";
   import { goto } from "@sapper/app";
-  import { todos } from "../../../context";
-  import { fetchApi } from "../../../utils";
+  import { logout } from "../../../utils";
 
   let warningMessage = "";
-  const allTodos = [...$todos];
-  const [todo] = allTodos.filter((t) => Number(t.id) === Number(id));
+
+  const { id } = todo;
   const dateTimeInfo = todo.dateTodo.split("T");
   let date = dateTimeInfo[0];
   let time = dateTimeInfo[1].split(".")[0];
@@ -38,8 +42,7 @@
 
     if (status === 400) return (warningMessage = data.detail);
     if (status === 401) {
-      await fetch("/api/logout.json", { method: "POST" });
-      window.location.href = "/login";
+      await logout();
     }
     await goto("/workspace");
   };
@@ -54,12 +57,10 @@
     });
 
     if (!secureDelete) return "";
-
     const { status } = await fetchApi.delete(`/todos/${id}`, {}, token);
 
     if (status === 401) {
-      await fetch("/api/logout.json", { method: "POST" });
-      window.location.href = "/login";
+      await logout();
     }
     await goto("/workspace");
   };
