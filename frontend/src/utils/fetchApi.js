@@ -51,3 +51,10 @@ class FetchApi {
 }
 
 export const fetchApi = new FetchApi()
+
+export const logout = async () => {
+  const { status } = await fetch("/api/logout.json", { method: "POST" })
+  if (status) {
+    window.location.href = "/login";
+  }
+};
