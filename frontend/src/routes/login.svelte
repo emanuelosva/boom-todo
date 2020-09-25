@@ -112,6 +112,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Login - BoomTodo</title>
+</svelte:head>
+
 <div class="Login">
   <div class="Login-container">
     <div class="Login-title">

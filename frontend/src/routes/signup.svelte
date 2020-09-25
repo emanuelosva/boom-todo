@@ -135,6 +135,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Signup - BoomTodo</title>
+</svelte:head>
+
 <div class="Signup">
   <div class="Signup-container">
     <div class="Signup-title">
