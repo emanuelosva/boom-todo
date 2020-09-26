@@ -42,7 +42,7 @@ This app is part of a challenge of my mentor in Platzi Master Program. I had to 
 Clone this repository and:
 
 ```
-# Setup the project
+# Setup the project.
 
 bash setup.sh
 ```
