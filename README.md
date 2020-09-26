@@ -49,7 +49,7 @@ bash setup.sh
 
 You need to install pm2.
 
-````
+```bash
 sudo npm install -g pm2
 ```
 
