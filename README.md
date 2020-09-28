@@ -36,6 +36,10 @@ This app is part of a challenge of my mentor in Platzi Master Program. I had to 
   - **JWT** (For authentication and authorization)
   - **Django** (As a AUTH micro service [It was for an educational requirement])
 
+- Db Diagram:
+
+![](https://user-images.githubusercontent.com/62397465/94471726-41c03a00-018f-11eb-9feb-8543954b5d48.png)
+
 
 ## You can run this project.
 
